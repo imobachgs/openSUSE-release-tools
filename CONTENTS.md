@@ -189,7 +189,7 @@ Create SRs for Leap.
 * Sources: [update_crawler.py](update_crawler.py) and [script](script).
 * Documentation: --
 * Package: openSUSE-release-tools-leaper
-* Usage: obsolete
+* Usage: obsolete (by origin-manager)
 
 #### create_staging
 
@@ -209,7 +209,7 @@ Handles maintenance incident requests
 * Sources: [check_maintenance_incidents.py](check_maintenance_incidents.py)
 * Documentation: [docs/maintbot.asciidoc](docs/maintbot.asciidoc)
 * Package: openSUSE-release-tools-maintenance
-* Usage: obsolete
+* Usage: obsolete (by origin-manager)
 
 #### leaper
 
@@ -227,7 +227,7 @@ Keeps track of from what project a package originates, submit updates, review re
 * Sources: [origin-manager.py](origin-manager.py) and [web](web)
 * Documentation: [docs/origin-manager.md](docs/origin-manager.md)
 * Package: openSUSE-release-tools-origin-manager
-* Usage: [gocd](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Forigin-manager)
+* Usage: [gocd](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+origin-manager)
 
 #### staging-bot
 
@@ -283,7 +283,7 @@ OpenQA stuff, not sure about the details.
 * Sources: [openqa-maintenance.py](openqa-maintenance.py) and [oqamaint](oqamaint)
 * Documentation: --
 * Package: openSUSE-release-tools
-* Usage: [gocd](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+openqa_maintenance)
+* Usage: [gocd](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+openqa-maintenance)
 
 #### repo-checker
 
@@ -295,9 +295,7 @@ Inspects built RPMs from staging projects.
   [findfileconflicts](findfileconflicts), [write_repo_susetags_file.pl](write_repo_susetags_file.pl)
 * Documentation: --
 * Package: openSUSE-release-tools-repo-checker
-* Usage: gocd ([project-installcheck.py](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+project-installcheck), [staging-installcheck](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+staging-installcheck),
-[maintenance-installcheck.py](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+maintenance-installcheck) and
-[findfileconflicts](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+findfileconflicts))
+* Usage: gocd ([project-installcheck.py](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+project-installcheck), [staging-installcheck](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+staging-installcheck) and [maintenance-installcheck.py](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+maintenance-installcheck)
 
 #### manager_42.py
 
@@ -318,7 +316,7 @@ review bot that assigns reviews (?).
 * Sources: [check_source.py](check_source.py) and [check_source.pl](check_source.pl)
 * Documentation: [docs/check_source.asciidoc](docs/check_source.asciidoc)
 * Package: openSUSE-release-tools-check-source
-* Usage: [gocd](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+osc-check_source)
+* Usage: [gocd](https://github.com/openSUSE/openSUSE-release-tools/search?q=path%3A%2Fgocd+check_source)
 
 #### osc-origin.py
 
@@ -336,11 +334,13 @@ Helps with OBS build cycles visualization. See the [openSUSE:Factory/standard ex
 * Sources: [osc-cycle.py](osc-cycle.py)
 * Documentation: --
 * Package: --
-* Usage: ???
+* Usage: used to debug problems. See https://github.com/openSUSE/openSUSE-release-tools/pull/992 as an example.
 
 #### compare_pkglist.py
 
-Compares packages status between two projects.
+Compares packages status between two projects. It determines which project has the newer version of a package,
+shows the diff, etc. Additionally, it is able to create a submit request from SOURCE to TARGET in case packages
+are different.
 
 * Sources: [compare_pkglist.py](compare_pkglist.py)
 * Documentation: --
@@ -354,7 +354,7 @@ Manages staging projects.
 * Sources: [osc-staging.py](osc-staging.py)
 * Documentation: [docs/staging.asciidoc](docs/staging.asciidoc) and [docs/testing.asciidoc](docs/testing.asciidoc)
 * Package: osc-plugin-staging
-* Usage: ???
+* Usage: staging projects management
 
 #### status.py
 
@@ -363,22 +363,25 @@ Checks the status of the staging workflow bots.
 * Sources: [status.py](status.py)
 * Documentation: --
 * Package: openSUSE-release-tools
-* Usage: ???
+* Usage: obsolete (it still checks for the status of some bots that are already retired, like leaper)
 
 #### fcc_submitter.py
 
-Creates SR from FactoryCandidates to openSUSE Leap project for new build succeded packages.
+The FactoryCandidates projects are used to determine whether a new package in Factory does build in
+the Leap version under development (see
+[openSUSE:Leap:15.2:FactoryCandidates](https://build.opensuse.org/project/show/openSUSE:Leap:15.2:FactoryCandidates)
+as example). This tool helps to manage this project by creating/updating project links for new
+packagers and creating SR from FactoryCandidates to the Leap project on successful builds.
 
 * Sources: [fcc_submitter.py](fcc_submitter.py)
 * Documentation: --
 * Package: openSUSE-release-tools
-* Usage: ???
+* Usage: manually
 
 #### issue-diff.py
 
 Compares packages from a project against factory for differences in referenced issues and presents
 changes to allow whitelisting before creating Bugzilla entries.
-
 
 * Sources: [issue-diff.py](issue-diff.py)
 * Documentation: --
@@ -392,7 +395,7 @@ Clones projects and dependencies between OBS instances.
 * Sources: [obs_clone.py](obs_clone.py)
 * Documentation: --
 * Package: openSUSE-release-tools
-* Usage: ???
+* Usage: obsolete (initially added for testing, but it was replaced with a container-based approach)
 
 #### obs-operator
 
@@ -402,7 +405,7 @@ directly.
 * Sources: [obs_operator.py](obs_operator.py)
 * Documentation: --
 * Package: openSUSE-release-tools
-* Usage: ???
+* Usage: obsolete
 
 #### scan_baselibs.py
 
@@ -411,7 +414,7 @@ Verifies 32bit binaries were imported properly towards a project.
 * Sources: [scan_baselibs.py](scan_baselibs.py)
 * Documentation: --
 * Package: openSUSE-release-tools
-* Usage: ???
+* Usage: obsolete (after https://github.com/openSUSE/open-build-service/pull/7662 was introduced in OBS)
 
 #### k8s-secret.py
 
@@ -420,4 +423,4 @@ Applies kubernetes secrets for OSRT tool osc configuration.
 * Sources: [k8s-secret.py](k8s-secret.py)
 * Documentation: --
 * Package: openSUSE-release-tools
-* Usage: ???
+* Usage: obsolete
